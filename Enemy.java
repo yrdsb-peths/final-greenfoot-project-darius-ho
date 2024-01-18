@@ -9,7 +9,8 @@ import greenfoot.*;  // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
 public class Enemy extends Actor
 {
     private int vx=0;
-    private boolean toRemove=false;
+    public boolean toRemove=false;
+    GreenfootSound explosionSound = new GreenfootSound("explode.wav");
     
     public Enemy(int v)
     {
@@ -28,6 +29,7 @@ public class Enemy extends Actor
             int px=-20+Greenfoot.getRandomNumber(40);
             int py=-20+Greenfoot.getRandomNumber(40);
             getWorld().addObject(new Explosion_flakes(getImage()),getX()+px,getY()+py);
+            explosionSound.play();
         }
         getWorld().addObject(new Explosion(),getX(),getY());
         toRemove=true;
@@ -36,12 +38,14 @@ public class Enemy extends Actor
     public void move()
     {
         setLocation(getX()+vx,getY());
-        /*Actor actor=getOneIntersectingObject(Rocket.class);
+        Actor actor=getOneIntersectingObject(Rocket.class);
         if(actor!=null)
         {
-            ((Rocket)actor)Destroyed();
+            ((Rocket)actor).Destroyed();
             Destroyed();
-        }*/
+            Greenfoot.setWorld(new GameOverScreen());
+            explosionSound.play();
+        }
         if(getX()<-200)
         {
             toRemove=true;

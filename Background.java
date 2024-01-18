@@ -8,14 +8,16 @@ import greenfoot.*;  // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
  */
 public class Background extends World
 {
-    public int score = 0;
+    public static int score = 0;
     Label scoreLabel;
     private int jeda=0;
     
     public Background()
     {    
         // Create a new world with 600x400 cells with a cell size of 1x1 pixels.
-        super(600, 400, 1,false);
+        super(700, 415, 1,false);
+        
+        score = 0;
         
         addObject(new Rocket(),100,200);
         
@@ -44,20 +46,13 @@ public class Background extends World
     private void checkCollisions()
     {   
         Rocket rocket = getRocket();
-        java.util.List<Enemy> enemies = getObjects(Enemy.class);
-
-        if (enemies != null && !enemies.isEmpty()) 
-        {
-            for (Enemy enemy : enemies) 
+        for (Laser laser : getObjects(Laser.class)) {
+            if (laser.checkCollisions()) 
             {
-                if (!enemy.toRemove && rocket.intersects(enemy)) 
-                {
-                    enemy.Destroyed();
-                    increaseScore();
-                }
+                increaseScore();
             }
         }
-    }   
+    }
     
     private Rocket getRocket()
     {

@@ -21,17 +21,23 @@ public class Laser extends Actor
         if(!toRemove)
         {
             setLocation(getX()+vx,getY());
-            Actor actor=getOneIntersectingObject(Enemy.class);
-            if(actor!=null)
-            {
-                ((Enemy)actor).Destroyed();
-                
-            }
-            if(getX()>getWorld().getWidth()+200)toRemove=true;
+            checkCollisions();
+            if(getX()>getWorld().getWidth()+200) toRemove=true;
         }
         else
         {
             getWorld().removeObject(this);
         }
+    }
+    
+    public boolean checkCollisions()
+    {
+        Actor enemy = getOneIntersectingObject(Enemy.class);
+        if (enemy != null)
+        {
+            ((Enemy) enemy).Destroyed();
+            return true;
+        }
+        return false;
     }
 }

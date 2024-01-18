@@ -51,4 +51,16 @@ public class Rocket extends Actor
         if(jeda==0)jeda=30;
         if(toRemove)getWorld().removeObject(this);
     }
+    
+    public void Destroyed()
+    {
+        for(int i=0;i<10;i++)
+        {
+            int px=-20+Greenfoot.getRandomNumber(40);
+            int py=-20+Greenfoot.getRandomNumber(40);
+            getWorld().addObject(new Explosion_flakes(getImage()),getX()+px,getY()+py);
+        }
+        getWorld().addObject(new Explosion(),getX(),getY());
+        toRemove=true;
+    }
 }
